@@ -9,7 +9,8 @@
     "author": "",
     "license": "ISC",
   "dependencies": {
-    "inquirer": "^9.0.2",
+    "dotenv": "^8.2.0",
+    "inquirer": "^8.0.0",
     "asciiart-logo": "^0.2.6",
     "console.table": "^0.10.0",
     "mysql2": "^2.1.0"
