@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const db = require('./db/index');
-const { findAllDepartments, findAllRoles } = require('./db/index');
+const { findAllDepartments, findAllRoles, viewDepartmentsReal } = require('./db/index');
 const queries = require ("./db/index");
 const logo = require('asciiart-logo');
 const config = require('./package.json');
@@ -41,13 +41,13 @@ const appMenu = () => {
         viewRoles();
         break;
       case 'Add Role':
-        // addRole();
+        addRole();
         break;
       case 'View All Departments':
         viewDepartments();
         break;
       case 'Add Department':
-        // addDepartment();
+        departmentsMenu();
         break;
       case 'Quit':
         // quit();
@@ -84,6 +84,26 @@ const viewDepartments = () => {
   })
 }
 
+
+const addDepartmentQuestion = [
+  {
+    type: "input",
+    message: "What is the name of the new department?",
+    name: "addDepartment",
+  }
+]
+
+const departmentsMenu = () => {
+  inquirer.prompt(addDepartmentQuestion)
+  .then((data) => {
+    db.insertDepartment(data.addDepartment)
+    console.log(`Added ${data.addDepartment} to the database` )
+  })
+  .then(() => {
+    appMenu();
+  })
+}
+
 const viewRoles = () => {
   db.findAllRoles()
   .then(([data]) => {
@@ -91,6 +111,36 @@ const viewRoles = () => {
   })
   .then(() => {
     appMenu();
+  })
+}
+
+const departments = () => {
+  db.getDepartments()
+}
+
+const roleQuestions = [
+  {
+    type: "input",
+    message: "What is the name of the new role?",
+    name: "roleName" 
+  },
+  {
+    type: "input",
+    message: "What is the salary of the new role?",
+    name: "roleSalary" 
+  },
+  {
+    type: "list",
+    message: "In which department does the new role belong?",
+    choices: departments(),
+    name: "roleDeparment"
+  },
+]
+
+const addRole = () => {
+  inquirer.prompt(roleQuestions)
+  .then((data) => {
+    console.log("okay")
   })
 }
 
@@ -104,6 +154,6 @@ const viewEmployees = () => {
   })
 }
 
+
 init();
 
-// ask questions

@@ -2,9 +2,9 @@
 -- SELECT * FROM department;
 
 -- Add a department
--- USE office_db;
--- INSERT INTO department (name)
---   VALUES("Pizza");
+USE office_db;
+INSERT INTO department (name)
+  VALUES("Pizza");
 
 
 
@@ -28,7 +28,6 @@
 --   role.department_id = department.id;
 
 -- Add a role
--- USE office_db;
 -- INSERT INTO role (title, salary, department_id)
 -- "cheese" is a response to the question, 15000 is a response, 6 is based off choices read from  department 
 -- VALUES ("Cheese", 15000, 6);
