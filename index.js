@@ -114,33 +114,42 @@ const viewRoles = () => {
   })
 }
 
-const departments = () => {
-  db.getDepartments()
-}
-
-const roleQuestions = [
-  {
-    type: "input",
-    message: "What is the name of the new role?",
-    name: "roleName" 
-  },
-  {
-    type: "input",
-    message: "What is the salary of the new role?",
-    name: "roleSalary" 
-  },
-  {
-    type: "list",
-    message: "In which department does the new role belong?",
-    choices: departments(),
-    name: "roleDeparment"
-  },
-]
-
-const addRole = () => {
+const addRole = async () => {
+  const depData = await db.findAllDepartments()
+  .then(([data]) => {
+    return data.map(({ id, name }) => ({
+      id: id,
+      name: name,
+    }));
+  });
+  const roleQuestions = [
+    {
+      type: "input",
+      message: "What is the name of the new role?",
+      name: "roleName" 
+    },
+    {
+      type: "input",
+      message: "What is the salary of the new role?",
+      name: "roleSalary" 
+    },
+    {
+      type: "list",
+      message: "In which department does the new role belong?",
+      choices: depData,
+      name: "roleDepartment"
+    },
+  ]
   inquirer.prompt(roleQuestions)
   .then((data) => {
-    console.log("okay")
+    // console.log(depData)
+    let deptId = findId(depData, data.roleDepartment)
+    const roleData = [data.roleName, data.roleSalary, deptId];
+    db.insertRole(roleData);
+    console.log(`Added ${data.roleName} to the database` )
+  })
+  .then(() => {
+    appMenu();
   })
 }
 
@@ -154,6 +163,13 @@ const viewEmployees = () => {
   })
 }
 
+const findId = (arr, input) => {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].name === input) {
+      return arr[i].id;
+    }
+  }
+}
 
 init();
 

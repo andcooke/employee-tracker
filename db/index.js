@@ -19,15 +19,12 @@ class Queries{
   insertDepartment(input) {
     return this.db.promise().query('INSERT INTO department (name) VALUES(?);', input)
   }
-  getDepartments() {
-    this.db.promise().query('SELECT * FROM department')
-    .then((data) => {
-      let deptNames = [];
-      data[0].map(name => (deptNames.push(name.name)))
-      return deptNames;
-    })
+  insertRole(input) {
+    return this.db.promise().query('INSERT INTO role (title, salary, department_id) VALUES(?, ?, ?);', input)
   }
-  // insertRole(title, salary, department)
+  showDepartment(input) {
+    return this.db.promise().query('SELECT id FROM department WHERE name = ?', input)
+  }
 } 
 
 module.exports = new Queries(db)
