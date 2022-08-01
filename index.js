@@ -26,7 +26,7 @@ const init = () => {
 const appMenu = () => {
   inquirer.prompt(appQuestions)
   .then((data) => {
-    console.log(data)
+    // console.log(data)
     switch(data.answer) {
       case 'View All Employees':
         viewEmployees();
@@ -116,11 +116,11 @@ const viewRoles = () => {
 }
 
 const addRole = async () => {
-  const depData = await db.findAllDepartments()
+  await db.findAllDepartments()
   .then(([data]) => {
-    return data.map(({ id, name }) => ({
+    depData = data.map(({ id, department_name }) => ({
       id: id,
-      name: name,
+      name: department_name,
     }));
   });
   const roleQuestions = [
@@ -299,7 +299,8 @@ const findId = (arr, input, param) => {
 }
 
 const quit = () => {
-  console.log('Great decision!')
+  console.log('Great decision!');
+  process.exit();
 }
 
 

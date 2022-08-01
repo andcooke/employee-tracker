@@ -29,11 +29,11 @@ VALUES ("Men's Clothing", 30000, 1),
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES ("James", "Taylor", 4, NULL),
-       ("James", "Taylor", 3, 1),
+       ("James 'Tiny'", "Taylor Jr.", 3, 1),
        ("Jaymes", "Shmaylor", 12, NULL),
        ("Jaime", "Taylore", 10, 3),
        ("Taylor", "James", 8, NULL),
-       ("Derek", "Fisher", 6, 5),
-       ("Derrick", "Rose", 6, 5),
+       ("Mahmoud", "Abdul-Rauf", 6, 5),
+       ("Ken", "Burns", 16, NULL),
        ("Hakeem", "Olajuwon", 5, 5);
 
