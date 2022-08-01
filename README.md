@@ -1,10 +1,13 @@
 # Employee Tracker
 
   Watch the walkthrough video below to see how you use this app:
-  
-  
 
-  Uploading Employee Tracker Walkthrough.mp4…
+
+
+
+
+  https://user-images.githubusercontent.com/105688564/182257956-d0646eeb-e546-401d-859c-1abeb3ec0b1b.mp4
+
 
 
 
