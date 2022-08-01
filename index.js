@@ -7,7 +7,7 @@ const config = require('./package.json');
 const cTable = require('console.table');
 
 
-
+//Initial function
 const init = () => {
   console.log(logo({
     name: 'Employee Tracker',
@@ -22,9 +22,9 @@ const init = () => {
   appMenu();
 }
 
-
+//Recurring questions after every selection prompt track
 const appMenu = () => {
-  inquirer.prompt(testQuestions)
+  inquirer.prompt(appQuestions)
   .then((data) => {
     console.log(data)
     switch(data.answer) {
@@ -32,7 +32,7 @@ const appMenu = () => {
         viewEmployees();
         break;
       case 'Add Employee':
-        // addEmployee();
+        addEmployee();
         break;
       case 'Update Employee Role':
         // updateEmployee();
@@ -47,7 +47,7 @@ const appMenu = () => {
         viewDepartments();
         break;
       case 'Add Department':
-        departmentsMenu();
+        addDepartment();
         break;
       case 'Quit':
         // quit();
@@ -56,7 +56,8 @@ const appMenu = () => {
   }) 
 }
 
-const testQuestions = [
+//Main questions
+const appQuestions = [
   {
     type: "list",
     message: "What would you like to do?",
@@ -74,6 +75,7 @@ const testQuestions = [
   }
 ]
 
+//View Departments
 const viewDepartments = () => {
   db.findAllDepartments()
   .then(([data]) => {
@@ -84,20 +86,19 @@ const viewDepartments = () => {
   })
 }
 
-
 const addDepartmentQuestion = [
   {
     type: "input",
     message: "What is the name of the new department?",
-    name: "addDepartment",
+    name: "department",
   }
 ]
 
-const departmentsMenu = () => {
+const addDepartment = () => {
   inquirer.prompt(addDepartmentQuestion)
   .then((data) => {
-    db.insertDepartment(data.addDepartment)
-    console.log(`Added ${data.addDepartment} to the database` )
+    db.insertDepartment(data.department)
+    console.log(`Added ${data.department} to the database` )
   })
   .then(() => {
     appMenu();
@@ -142,8 +143,7 @@ const addRole = async () => {
   ]
   inquirer.prompt(roleQuestions)
   .then((data) => {
-    // console.log(depData)
-    let deptId = findId(depData, data.roleDepartment)
+    let deptId = findId(depData, data.roleDepartment, "name")
     const roleData = [data.roleName, data.roleSalary, deptId];
     db.insertRole(roleData);
     console.log(`Added ${data.roleName} to the database` )
@@ -163,13 +163,97 @@ const viewEmployees = () => {
   })
 }
 
-const findId = (arr, input) => {
+
+const addEmployee = async () => {
+  let roles = [];
+  let result;
+  let man;
+  let managers = ["None"];
+  const roleData = await db.findAllRoles()
+  .then(([data]) => {
+    result = data.map(({ id, title, salary }) => ({
+      id: id,
+      title: title,
+      salary: salary,
+    }));
+    for (let i = 0; i < result.length ; i++) {
+      roles.push(result[i].title)
+    }
+  });
+  const employeeData = await db.findAllEmployees()
+  .then(([data]) => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].manager === null){
+        man = data.map(({ id, first_name, last_name }) => ({
+          id: id,
+          first_name: first_name,
+          last_name: last_name,
+        }));
+        managers.push(`${data[i].first_name} ${data[i].last_name}`)
+      }
+    }
+  })
+//   man = data.map(({ id, first_name, last_name }) => ({
+//     id: id,
+//     first_name: first_name,
+//     last_name: last_name,
+//   }));
+//   for (let i = 0; i < result.length ; i++) {
+//     roles.push(result[i].title)
+//   }
+// });
+  const employeeQuestions = [
+    {
+      type: "input",
+      message: "What is the employee's first name?",
+      name: "firstName" 
+    },
+    {
+      type: "input",
+      message: "What is the employee's last name?",
+      name: "lastName" 
+    },
+    {
+      type: "list",
+      message: "What is the employee's role?",
+      choices: roles,
+      name: "employeeRole"
+    },
+    {
+      type: "list",
+      message: "Who is the employee's manager?",
+      choices: managers,
+      name: "manager" 
+    },
+  ]
+  inquirer.prompt(employeeQuestions)
+  .then((data) => {
+    //first name
+    let employeeInput = [];
+    // console.log(employeeInput);
+    const roleId = findId(result, data.employeeRole, "title");
+    const managerId = findId(man, data.manager, "first_name");
+    employeeInput.push(data.firstName, data.lastName, roleId, managerId);
+    db.insertEmployee(employeeInput);
+    console.log(`Added ${data.firstName} ${data.lastName} to the database` )
+  })
+  .then(() => {
+    appMenu();
+  })
+}
+
+const findId = (arr, input, param) => {
+  if (param === "first_name"){
+    input = input.split(" ")[0];
+  }
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i].name === input) {
+    if (arr[i][param] === input) {
       return arr[i].id;
     }
   }
+  return null;
 }
 
-init();
 
+
+init();

@@ -22,8 +22,8 @@ class Queries{
   insertRole(input) {
     return this.db.promise().query('INSERT INTO role (title, salary, department_id) VALUES(?, ?, ?);', input)
   }
-  showDepartment(input) {
-    return this.db.promise().query('SELECT id FROM department WHERE name = ?', input)
+  insertEmployee(input) {
+    return this.db.promise().query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?, ?, ?, ?);', input)
   }
 } 
 

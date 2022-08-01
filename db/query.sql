@@ -2,9 +2,9 @@
 -- SELECT * FROM department;
 
 -- Add a department
-USE office_db;
-INSERT INTO department (name)
-  VALUES("Pizza");
+-- USE office_db;
+-- INSERT INTO department (name)
+--   VALUES("Pizza");
 
 
 
