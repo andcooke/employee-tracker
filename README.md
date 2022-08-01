@@ -1,5 +1,13 @@
 # Employee Tracker
 
+  Watch the walkthrough video below to see how you use this app:
+  
+  
+
+  Uploading Employee Tracker Walkthrough.mp4…
+
+
+
   ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
   
   ## Description
