@@ -1,5 +1,8 @@
 # Employee Tracker
 
+  ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+  
+
   Watch the walkthrough video below to see how you use this app:
 
 
@@ -11,8 +14,6 @@
 
 
 
-  ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-  
   ## Description
   
   This app allows a user to input and update information about employees, roles, and departments of whatever project they're working on.
