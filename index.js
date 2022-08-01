@@ -22,7 +22,7 @@ const init = () => {
   appMenu();
 }
 
-//Recurring questions after every selection prompt track
+//Main menu
 const appMenu = () => {
   inquirer.prompt(appQuestions)
   .then((data) => {
@@ -50,7 +50,7 @@ const appMenu = () => {
         addDepartment();
         break;
       case 'Quit':
-        // quit();
+        quit();
         break;   
     }
   }) 
@@ -163,7 +163,6 @@ const viewEmployees = () => {
   })
 }
 
-
 const addEmployee = async () => {
   let roles = [];
   let result;
@@ -233,7 +232,6 @@ const addEmployee = async () => {
   })
 }
 
-
 const updateEmployee = async () => {
   let roles = [];
   let employees = [];
@@ -299,5 +297,10 @@ const findId = (arr, input, param) => {
   }
   return null;
 }
+
+const quit = () => {
+  console.log('Great decision!')
+}
+
 
 init();
