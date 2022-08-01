@@ -38,6 +38,6 @@
 -- Add an employee
 
 -- Update an employee
-
+-- UPDATE employee SET role_id = 3 WHERE id = 1;
 
 -- Quit

@@ -25,6 +25,14 @@ class Queries{
   insertEmployee(input) {
     return this.db.promise().query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?, ?, ?, ?);', input)
   }
+  //update employee
+  //new role_id, employee being changed id
+  update(input) {
+    return this.db.promise().query('UPDATE employee SET role_id = ? WHERE id = ?;', input)
+  }
+  quit() {
+    // return this.db.promise().query('INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES(?, ?, ?, ?);', input)
+  }
 } 
 
 module.exports = new Queries(db)
